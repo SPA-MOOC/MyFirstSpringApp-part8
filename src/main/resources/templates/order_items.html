@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  </head>
+<body>
+<div>
+  <span th:insert="~{menu :: menu}"></span>
+  <h1  th:text="${items.size()>0} ? #{items_title}:'No items in store'"></h1>
+  <h3 th:if="${category!=null}" th:text="|Category:${category}|"></h3>
+  <div th:if="${category==null}">
+  <h2 th:text="'Filter category:'"></h2>
+    <form th:action="@{category}" method="get">
+      <input type="text" name="name">
+      <input type="submit" th:value="'Filter'">
+    </form>
+  </div>
+  <h2 th:text="'Filter items:'"></h2>
+  <form th:action="@{filter_items}" method="get">
+    Item's name: <input type="text" name="name"/>
+    Item's price: <input type="number" name="price_min" placeholder="min"/> <input type="number" name="price_max" placeholder="max"/>
+    <input type="submit" th:value="'Filter'">
+  </form>
+  <div>
+  <form th:action="@{reset_filters}" method="get">
+    <input type="submit" th:value="'Reset filters'">
+  </form>
+  </div>
+</div>
+  <ol th:if="${items.size()>0}">
+    <li th:each="item,state:${items}">
+<!--      <div th:insert="~{item_frag :: printItem(index=${state.index},item_name=${item.name}, item_price=${item.price}, item_cat=${item.category.name}, linkDetails='true', linkCategory='false')}"></div>-->
+      <div th:insert="~{item_frag :: printItem(index=${item.getId()},item_name=${item.name}, item_price=${item.price}, item_cat=${item.category.name}, linkDetails='true', linkCategory='false')}"></div>
+      <a th:href="@{'/cart/add/'+${item.getId()}}">Add to cart</a>
+<!--      <a th:href="@{'/items/'+${item.getId()}}">Details</a>-->
+<!--      <a th:href="@{'/cart/add/'+${state.index}}">Add to cart</a>-->
+  </ol>
+  <h3 th:if="${items.size()==0}">There is no items from this category</h3>
+  <button th:if="${category!=null}" onclick="history.back()" th:text="#{go_back}">Go back</button>
+</div>
+<span th:insert="~{menu :: footer}"></span>
+</body>
+</html>
