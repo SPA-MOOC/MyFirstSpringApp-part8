@@ -98,4 +98,8 @@ public List<ItemEntity> getItemsFromRepository() {return this.items.findAll();}
         categoryList=categoryEntities.stream().map(categoryEntity -> new Category(categoryEntity.getName())).toList();
         return categoryList;
     }
+
+    public ItemEntity getItemByName(String name){
+        return items.findByName(name);
+    }
 }

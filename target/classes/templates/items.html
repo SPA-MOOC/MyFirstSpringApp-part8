@@ -16,14 +16,14 @@
       <input type="submit" th:value="'Filter'">
     </form>
   </div>
-  <h2 th:text="'Filter items:'"></h2>
-  <form th:action="@{filter_items}" method="get">
+  <h2 sec:authorize="hasRole('ROLE_USER')" th:text="'Filter items:'"></h2>
+  <form sec:authorize="hasRole('ROLE_USER')" th:action="@{filter_items}" method="get">
     Item's name: <input type="text" name="name"/>
     Item's price: <input type="number" name="price_min" placeholder="min"/> <input type="number" name="price_max" placeholder="max"/>
     <input type="submit" th:value="'Filter'">
   </form>
   <div>
-  <form th:action="@{reset_filters}" method="get">
+  <form sec:authorize="hasRole('ROLE_USER')" th:action="@{reset_filters}" method="get">
     <input type="submit" th:value="'Reset filters'">
   </form>
   </div>

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemEntityRepository extends JpaRepository<ItemEntity, Integer> {
+    ItemEntity findByName(String name);
 
     List<ItemEntity> findByCategory_Name(String name);
     @Override
@@ -14,5 +15,7 @@ public interface ItemEntityRepository extends JpaRepository<ItemEntity, Integer>
 
     @Override
     void deleteById(Integer integer);
+
+
 
 }

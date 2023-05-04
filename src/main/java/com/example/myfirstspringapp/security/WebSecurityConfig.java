@@ -68,9 +68,10 @@ public PasswordEncoder passwordEncoder() {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/items","/items/category").permitAll()
-                        .requestMatchers("/cart/**","/items/filter_items").hasRole("USER")
+                        .requestMatchers("/","/items/","/items/category").permitAll()
+                        .requestMatchers("/cart/**","/items/filter_items","/items/reset_filters").hasRole("USER")
                         .requestMatchers("/items/manage/**","/warehouse/**").hasRole("ADMIN")
+                        .requestMatchers("/items/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
