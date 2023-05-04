@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
  </head>
 <body>
 <div th:fragment="menu">
+    <span sec:authorize="isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out" />
+    </form>
+      <h1 sec:authorize="isAuthenticated()">Hello <span sec:authentication="name"></span></h1>
+  </span>
+  <div sec:authorize="!isAuthenticated()">
+    <form th:action="@{/login}" method="post">
+      <input type="submit" value="Log in" />
+    </form>
+  </div>
+
   <a th:href="@{/items/}" th:text="#{menu.print_all.msg}">Print items</a>
-  <a th:href="@{/cart/}" th:text="#{menu.show_cart.msg}">Show cart</a>
+  <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/cart/}" th:text="#{menu.show_cart.msg}">Show cart</a>
+  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/items/manage/add}" th:text="#{menu.add_new_item}">Add item</a>
+  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/warehouse/}" th:text="#{menu.make_order}">Make order</a>
+
+
 </div>
 <footer><a th:href="@{/}">Go to the main page</a></footer>
 </body>

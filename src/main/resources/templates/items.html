@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -16,14 +16,25 @@
       <input type="submit" th:value="'Filter'">
     </form>
   </div>
+  <h2 th:text="'Filter items:'"></h2>
+  <form th:action="@{filter_items}" method="get">
+    Item's name: <input type="text" name="name"/>
+    Item's price: <input type="number" name="price_min" placeholder="min"/> <input type="number" name="price_max" placeholder="max"/>
+    <input type="submit" th:value="'Filter'">
+  </form>
+  <div>
+  <form th:action="@{reset_filters}" method="get">
+    <input type="submit" th:value="'Reset filters'">
+  </form>
+  </div>
+</div>
   <ol th:if="${items.size()>0}">
     <li th:each="item,state:${items}">
-<!--      <ul>-->
-<!--        <li><a th:href="@{'/items/'+${state.index}}" th:text="#{name_name}+':'+${item.name}"></a></li>-->
-<!--        <li th:if="${category==null}" th:text="#{category_name}+':'+${item.category.cat_name}"></li></ul>-->
-      <div th:insert="~{item_frag :: printItem(index=${state.index},item_name=${item.name}, item_price=${item.price}, item_cat=${item.category.cat_name}, linkDetails='true', linkCategory='false')}"></div>
-      <a th:href="@{'/cart/add/'+${state.index}}">Add to cart</a>
-<!--      </li>-->
+<!--      <div th:insert="~{item_frag :: printItem(index=${state.index},item_name=${item.name}, item_price=${item.price}, item_cat=${item.category.name}, linkDetails='true', linkCategory='false')}"></div>-->
+      <div th:insert="~{item_frag :: printItem(index=${item.getId()},item_name=${item.name}, item_price=${item.price}, item_cat=${item.category.name}, linkDetails='true', linkCategory='false')}"></div>
+      <a sec:authorize="hasRole('ROLE_USER')" th:href="@{'/cart/add/'+${item.getId()}}">Add to cart</a>
+<!--      <a th:href="@{'/items/'+${item.getId()}}">Details</a>-->
+<!--      <a th:href="@{'/cart/add/'+${state.index}}">Add to cart</a>-->
   </ol>
   <h3 th:if="${items.size()==0}">There is no items from this category</h3>
   <button th:if="${category!=null}" onclick="history.back()" th:text="#{go_back}">Go back</button>

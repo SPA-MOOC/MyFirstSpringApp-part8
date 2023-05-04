@@ -1,6 +1,7 @@
 package com.example.myfirstspringapp.repositories;
 
 import com.example.myfirstspringapp.data.Item;
+import com.example.myfirstspringapp.entities.ItemEntity;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -13,17 +14,18 @@ import java.util.List;
 @Getter
 @SessionScope
 public class Cart {
-    List<Item> items=new LinkedList<>();
-    public Item getItem(int nr){
+    //List<Item> items=new LinkedList<>();
+    List<ItemEntity> items=new LinkedList<>();
+    public ItemEntity getItem(int nr){
         return  items.get(nr);
     }
-    public void addItem(Item item){
+    public void addItem(ItemEntity item){
         this.items.add(item);
     }
 
     public List<Float> getPrices(){
         List<Float> prices=new ArrayList<>();
-        for(Item item:items) prices.add(item.getPrice());
+        for(ItemEntity item:items) prices.add(item.getPrice());
         return prices;
     }
 }

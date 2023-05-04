@@ -8,6 +8,7 @@ import com.example.myfirstspringapp.data.Item;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class ItemRepository {
         this.items.remove(id);
     }
 
-
+    public void editItem(Item item, int id) {removeItem(id);items.add(id,item);}
 
     public List<Item> getItemsFromCategory(String category){
         Predicate<Item> byCat = item -> item.getCategory().getCat_name().equals(category);
@@ -57,5 +58,22 @@ public class ItemRepository {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+    public List<Item> getFilteredItems(Optional<String> name, Optional<Float> price_min, Optional<Float> price_max){
+        List<Item> filteredItems=items;
+        if(name.isPresent()){
+            filteredItems=items.stream().filter(item-> item.getName().contains(name.get()))
+                    .collect(Collectors.toList());
+        }
+        if(price_min.isPresent()){
+            filteredItems=filteredItems.stream().filter(item-> item.getPrice()>=price_min.get())
+                    .collect(Collectors.toList());
+        }
+        if(price_max.isPresent()){
+            filteredItems=filteredItems.stream().filter(item-> item.getPrice()<=price_max.get())
+                    .collect(Collectors.toList());
+        }
+        return filteredItems;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.myfirstspringapp.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +25,7 @@ public class ItemEntity {
 //    private int category;
     @ManyToOne
     @JoinColumn(name = "CATEGORY", referencedColumnName = "ID", nullable = false)
-    private CategoryEntity categoryByCategory;
+    private CategoryEntity category;
 
 
 
@@ -52,11 +53,5 @@ public class ItemEntity {
         return result;
     }
 
-    public CategoryEntity getCategoryByCategory() {
-        return categoryByCategory;
-    }
 
-    public void setCategoryByCategory(CategoryEntity categoryByCategory) {
-        this.categoryByCategory = categoryByCategory;
-    }
 }

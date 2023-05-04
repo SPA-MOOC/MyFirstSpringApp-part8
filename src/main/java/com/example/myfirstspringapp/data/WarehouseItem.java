@@ -1,10 +1,8 @@
-package com.example.myfirstspringapprest.data;
+package com.example.myfirstspringapp.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 
 @Data

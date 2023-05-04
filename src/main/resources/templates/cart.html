@@ -14,7 +14,8 @@
         <ul>
         <li th:text="|Name: ${item.name}|"></li>
             <li th:text="|Price: ${item.price} zł|"></li>
-            <li th:text="|Category: ${item.category.cat_name}|"></li></ul>
+<!--            <li th:text="|Category: ${item.category.cat_name}|"></li></ul>-->
+            <li th:text="|Category: ${item.category.name}|"></li></ul>
     </li>
 </ol>
     <div th:if="${cart.size()>0}" th:with="zm=${prices}">

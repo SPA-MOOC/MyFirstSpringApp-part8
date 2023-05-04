@@ -1,4 +1,18 @@
-package com.example.myfirstspringapp.entities;
+package com.example.myfirstspringapp.repositories.db;
 
-public interface ItemEntityRepository extends org.springframework.data.jpa.repository.JpaRepository<com.example.myfirstspringapp.entities.ItemEntity, int> {
+import com.example.myfirstspringapp.entities.ItemEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ItemEntityRepository extends JpaRepository<ItemEntity, Integer> {
+
+    List<ItemEntity> findByCategory_Name(String name);
+    @Override
+    Optional<ItemEntity> findById(Integer integer);
+
+    @Override
+    void deleteById(Integer integer);
+
 }
